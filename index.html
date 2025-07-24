@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About Us </title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+  /* RESET */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    color: #1c1c1c;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAVBAR */
+  nav {
+    background: #000;
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    user-select: none;
+  }
+  nav a {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #ddd;
+    transition: color 0.3s ease;
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: #00aaff;
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    max-width: 1080px;
+    margin: 5rem auto 3rem;
+    padding: 0 2rem;
+    text-align: center;
+  }
+  .page-header h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    margin-bottom: 1rem;
+  }
+  .page-header p {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* TIMELINE CONTAINER */
+  .timeline-container {
+    max-width: 1080px;
+    margin: 4rem auto 2rem;
+    padding: 0 2rem;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+  }
+  .timeline-container::-webkit-scrollbar {
+    display: none;
+  }
+  .timeline {
+    display: flex;
+    gap: 4.2rem;
+    min-width: 900px;
+    position: relative;
+    padding: 2rem 0 3rem 0;
+  }
+  /* horizontal line behind timeline circles */
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 3rem;
+    right: 3rem;
+    height: 3px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  /* timeline items */
+  .timeline-item {
+    position: relative;
+    width: 180px;
+    padding-top: 1.6rem;
+    text-align: center;
+    cursor: default;
+    user-select: none;
+    z-index: 2;
+    opacity: 0.5;
+    transition: opacity 0.5s ease, transform 0.3s ease;
+  }
+  .timeline-item.active {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+
+  /* timeline circles */
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    border: 3px solid #ccc;
+    border-radius: 50%;
+    z-index: 5;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .timeline-item.active::before {
+    border-color: #00aaff;
+    background-color: #00aaff;
+  }
+
+  /* timeline text */
+  .timeline-item h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 0.6rem;
+    color: #1c1c1c;
+    user-select: text;
+  }
+  .timeline-item p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.3;
+    margin-top: 0.3rem;
+    user-select: text;
+  }
+
+  /* timeline detail below timeline */
+  .timeline-detail {
+    max-width: 1080px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+    min-height: 110px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    user-select: text;
+  }
+  .timeline-detail.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== IMAGE SECTIONS ===== */
+  .sections-container {
+    max-width: 1080px;
+    margin: 0 auto 6rem;
+    padding: 0 2rem;
+  }
+
+  .section {
+    margin-bottom: 4rem;
+  }
+  .section h2 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    user-select: text;
+  }
+
+  /* grid for images */
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  /* Updated image styles to match Prestige site */
+  .image-grid img {
+    width: 180px;
+    height: 140px;
+    object-fit: cover;
+    border: 3px solid #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    display: block;
+    margin: 0 auto;
+  }
+  .image-grid img.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .timeline-item {
+      width: 140px;
+    }
+    .image-grid {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+    .image-grid img {
+      width: 140px;
+      height: 110px;
+    }
+  }
+  .slider-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto 3rem;
+}
+
+.slider-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.slider-button {
+  background: #00aaff;
+  color: #fff;
+  border: none;
+  font-size: 1.4rem;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.slider-button:hover {
+  background: #008fcc;
+}
+
+.slider {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 0.5rem;
+}
+
+.slider img {
+  min-width: 400px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 600px) {
+  .slider img {
+    min-width: 300px;
+    height: 200px;
+  }
+}
+.counter-section {
+  max-width: 1080px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.counter-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.counter-box {
+  padding: 2rem 1rem;
+  border-radius: 10px;
+  background: #f8f8f8;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.counter-box h2 {
+  font-size: 3rem;
+  color: #00aaff;
+  margin-bottom: 0.5rem;
+}
+
+.counter-box p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+@media (max-width: 600px) {
+  .counter-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.logo-section {
+  background: #f5f5f5;
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.logo-section h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.logo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-grid img {
+  height: 60px;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.logo-grid img:hover {
+  transform: scale(1.07);
+}
+
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#">Home</a>
+  <a href="#">Projects</a>
+  <a href="#">About Us</a>
+  <a href="#">Contact</a>
+</nav>
+
+<header class="page-header">
+  <h1>About Corporate Constructions</h1>
+  <p>Leading the industry with innovation, quality, and commitment. Meet our team and milestones.</p>
+</header>
+<section class="counter-section">
+  <div class="counter-container">
+    <div class="counter-box">
+      <h2 class="counter" data-target="28">0</h2>
+      <p>Years of Excellence</p>
+    </div>
+    <div class="counter-box">
+      <h2 class="counter" data-target="340">0</h2>
+      <p>Projects Completed</p>
+    </div>
+    <div class="counter-box">
+      <h2 class="counter" data-target="67000000">0</h2>
+      <p>Sq.Ft Delivered</p>
+    </div>
+    <div class="counter-box">
+      <h2 class="counter" data-target="15500000">0</h2>
+      <p>Sq.Ft Underway</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="timeline-container" aria-label="Company milestones timeline">
+  <h1 align="center">History timeline</h1>
+  <div class="timeline" role="list" tabindex="0">
+    <div class="timeline-item active" role="listitem" tabindex="0" data-detail="Founded in 1995, Corporate began its journey with a vision to create landmarks.">
+      <h3>1995</h3>
+      <p>Foundation</p>
+    </div>
+    <div class="timeline-item" role="listitem" tabindex="0" data-detail="Expanded into commercial projects, setting new standards in quality.">
+      <h3>2002</h3>
+      <p>Commercial Expansion</p>
+    </div>
+    <div class="timeline-item" role="listitem" tabindex="0" data-detail="Entered the hospitality sector with landmark hotel projects.">
+      <h3>2008</h3>
+      <p>Hospitality</p>
+    </div>
+    <div class="timeline-item" role="listitem" tabindex="0" data-detail="Launched luxury residences under the Corporate brand.">
+      <h3>2015</h3>
+      <p>Luxury Residences</p>
+    </div>
+    <div class="timeline-item" role="listitem" tabindex="0" data-detail="Awarded for sustainability and innovation in construction.">
+      <h3>2022</h3>
+      <p>Awards & Recognition</p>
+    </div>
+  </div>
+</section>
+
+<section class="timeline-detail active" id="timeline-detail" aria-live="polite">
+  Founded in 1995, Corporate began its journey with a vision to create landmarks.
+</section>
+
+<section class="sections-container" aria-label="Team sections">
+  <div class="section" id="commercial-section">
+  <h2>Commercial</h2>
+  <div class="slider-container">
+    <div class="slider-controls">
+      <button class="slider-button prev" onclick="slidePrev('commercial-slider')">&#10094;</button>
+      <button class="slider-button next" onclick="slideNext('commercial-slider')">&#10095;</button>
+    </div>
+    <div class="slider" id="commercial-slider">
+      <img src="https://prestigecorporatesite.s3.ap-south-1.amazonaws.com/projectimage/0eb35362-ddfc-41f5-b461-2403c5d5c2ec.webp" alt="Landmark Development">
+      <img src="i1.jpg" alt="Commercial Team Member 1">
+      <img src="i2.jpg" alt="Commercial 3">
+      <img src="i3.jpg" alt="Commercial 4">
+    </div>
+  </div>
+</div>
+
+<div class="section" id="hospitality-section">
+  <h2>Hospitality</h2>
+  <div class="slider-container">
+    <div class="slider-controls">
+      <button class="slider-button prev" onclick="slidePrev('hospitality-slider')">&#10094;</button>
+      <button class="slider-button next" onclick="slideNext('hospitality-slider')">&#10095;</button>
+    </div>
+    <div class="slider" id="hospitality-slider">
+      <img src="i4.jpg" alt="Hospitality 1">
+      <img src="i5.jpg" alt="Hospitality 2">
+      <img src="i6.jpg" alt="Hospitality 3">
+      <img src="i7.jpg" alt="Hospitality 4">
+    </div>
+  </div>
+</div>
+
+<div class="section" id="prestige-section">
+  <h2>Corporate Projects</h2>
+  <div class="slider-container">
+    <div class="slider-controls">
+      <button class="slider-button prev" onclick="slidePrev('projects-slider')">&#10094;</button>
+      <button class="slider-button next" onclick="slideNext('projects-slider')">&#10095;</button>
+    </div>
+    <div class="slider" id="projects-slider">
+      <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Residential Tower">
+      <img src="https://images.pexels.com/photos/259950/pexels-photo-259950.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Commercial Plaza">
+      <img src="luxury.jpg" alt="Luxury Hotel">
+      <img src="luxury1.jpg">
+    </div>
+  </div>
+</div>
+
+
+<div class="section" id="ceo-section">
+  <h2>CEO</h2>
+  <div class="slider-container">
+    <div class="slider-controls">
+      <button class="slider-button prev" onclick="slidePrev('ceo-slider')">&#10094;</button>
+      <button class="slider-button next" onclick="slideNext('ceo-slider')">&#10095;</button>
+    </div>
+    <div class="slider" id="ceo-slider">
+      <div class="slide-item">
+        <img src="ceo1.jpg" alt="CEO 1">
+        <p class="caption">Mr. Rajesh Patel</p>
+      </div>
+      <div class="slide-item">
+        <img src="ceo2.jpg" alt="CEO 2">
+        <p class="caption">Mr. Jordan Markin</p>
+      </div>
+      <div class="slide-item">
+        <img src="ceo3.jpg" alt="Board Member 1">
+        <p class="caption">Mr. Vishal Mehra</p>
+      </div>
+      <div class="slide-item">
+        <img src="ceo4.jpg" alt="Board Member 2">
+        <p class="caption">Mr. Vijay Salgaonkar</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="logo-section">
+  <h2>Our Trusted Partners</h2>
+  <div class="logo-grid">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike Logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo">
+  </div>
+</section>
+
+
+
+
+
+<script>
+  // Timeline interaction logic
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  const timelineDetail = document.getElementById('timeline-detail');
+
+  function activateItem(item) {
+    timelineItems.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    const detailText = item.getAttribute('data-detail');
+    timelineDetail.classList.remove('active');
+    setTimeout(() => {
+      timelineDetail.textContent = detailText;
+      timelineDetail.classList.add('active');
+    }, 200);
+  }
+
+  timelineItems.forEach(item => {
+    item.addEventListener('click', () => activateItem(item));
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateItem(item);
+      }
+    });
+  });
+
+  // Fade in images on scroll
+  const images = document.querySelectorAll('.image-grid img');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  images.forEach(img => observer.observe(img));
+</script>
+<script>
+  function slideNext(sliderId) {
+  const slider = document.getElementById(sliderId);
+  slider.scrollBy({ left: 420, behavior: 'smooth' });
+}
+
+function slidePrev(sliderId) {
+  const slider = document.getElementById(sliderId);
+  slider.scrollBy({ left: -420, behavior: 'smooth' });
+}
+</script>
+<script>
+  const counters = document.querySelectorAll('.counter');
+counters.forEach(counter => {
+  counter.textContent = '0';
+  
+  const updateCounter = () => {
+    const target = +counter.getAttribute('data-target');
+    const current = +counter.textContent;
+    const increment = target / 100;
+
+    if (current < target) {
+      counter.textContent = Math.ceil(current + increment);
+      setTimeout(updateCounter, 20);
+    } else {
+      counter.textContent = target.toLocaleString();
+    }
+  }
+
+  updateCounter();
+});
+</script>
+<footer style="background: #111; color: #fff; padding: 40px 20px; text-align: center; margin-top: 50px;">
+  <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between;">
+
+    <div style="flex: 1 1 250px; margin: 20px;">
+      <h2 style="font-size: 22px; margin-bottom: 15px;">About Us</h2>
+      <p style="line-height: 1.6;">We are a dynamic company committed to delivering exceptional services and solutions for your business needs.</p>
+    </div>
+
+    <div style="flex: 1 1 250px; margin: 20px;">
+      <h2 style="font-size: 22px; margin-bottom: 15px;">Contact</h2>
+      <p>📍 123 Business Street, Surat , India</p>
+      <p>📞 +91 98765 43210</p>
+      <p>✉️ contact@company.com</p>
+    </div>
+
+    <div style="flex: 1 1 250px; margin: 20px;">
+      <h2 style="font-size: 22px; margin-bottom: 15px;">Follow Us</h2>
+      <a href="#" style="color: #fff; margin: 0 10px; font-size: 20px; text-decoration: none;">Facebook</a><br/>
+      <a href="#" style="color: #fff; margin: 0 10px; font-size: 20px; text-decoration: none;">Instagram</a><br/>
+      <a href="#" style="color: #fff; margin: 0 10px; font-size: 20px; text-decoration: none;">LinkedIn</a>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+    <p style="font-size: 14px; color: #aaa;">© Corporate Group . All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
